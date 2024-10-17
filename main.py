@@ -28,7 +28,8 @@ def printInfo():
     print("2. Naujo skrydžio įkėlimas")
     print("3. Skrydžio redagavimas")
     print("4. Skrydžio šalinimas")
-    print("5. Išeiti iš programos")
+    print("5. Paieška")
+    print("6. Išeiti iš programos")
     print("---------------------------------------------")
 
 def printFlight(fl, num = 1):
@@ -90,4 +91,27 @@ while True:
             removeFlight()
             printFlights()
         case 5:
+            #1. filtravimas pagal miestą, atvaizduoti surūšiuoti
+            #2. filtravimas pagal skrydžio trukmę, surūšiuoti
+                # pasirenkame 1 arba 2.
+                #ivedame paieskos kriteriju: jei tekstas - where like, jei trukmė, visos trukmės to ir mažesnio ilgio
+                #duomenis surūšiuoti sorted.
+            print("miestas ar laikas")
+            kas = input()
+            print("ko ieskai?")
+            ko = input()
+
+            print("opt a")
+            if kas == "miesas":
+                print("prafiltravau pagal miesta")
+            if kas == "laikas":
+                print("prafiltravau pagal laika")
+
+            print("opt b")
+            match kas:
+                case "miesas":
+                    print()
+                case "laikas":
+                    print()
+        case 6:
                 exit(1)
