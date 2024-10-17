@@ -1,25 +1,49 @@
+import csv
 import datetime
 
-flights = [
-    [
-        'vno',
-        'kns',
-         datetime.datetime(2024, 10, 15, 14, 30, 0),
-         datetime.datetime(2024, 10, 15, 16, 30, 0)
-     ],
-    [
-        'vno',
-        'tln',
-         datetime.datetime(2024, 10, 15, 14, 30, 0),
-         datetime.datetime(2024, 10, 15, 20, 30, 0)
-     ],
-    [
-        'vno',
-        'chr',
-         datetime.datetime(2024, 10, 15, 14, 30, 0),
-         datetime.datetime(2024, 10, 15, 15, 00, 0)
-     ]
-]
+# flights = [
+#     [
+#         'vno',
+#         'kns',
+#          datetime.datetime(2024, 10, 15, 14, 30, 0),
+#          datetime.datetime(2024, 10, 15, 16, 30, 0)
+#      ],
+#     [
+#         'vno',
+#         'tln',
+#          datetime.datetime(2024, 10, 15, 14, 30, 0),
+#          datetime.datetime(2024, 10, 15, 20, 30, 0)
+#      ],
+#     [
+#         'vno',
+#         'chr',
+#          datetime.datetime(2024, 10, 15, 14, 30, 0),
+#          datetime.datetime(2024, 10, 15, 15, 00, 0)
+#      ]
+# ]
+FILE_PATH = "flights.csv"
+def loadFlights():
+    flights = []
+    with open(FILE_PATH, mode='r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            flight = [
+                row[0],
+                row[1],
+                datetime.datetime.strptime(row[2],"%Y-%m-%d %H:%M:%S"),
+                datetime.datetime.strptime(row[3],"%Y-%m-%d %H:%M:%S"),
+            ]
+            flights.append(flight)
+        return flights
+
+flights = loadFlights()
+
+def saveFlights(flights):
+    with open(FILE_PATH,mode='w' , newline="") as file:
+        writer = csv.writer(file)
+        for fl in flights:
+            writer.writerow([fl[0], fl[1], fl[2].strftime("%Y-%m-%d %H:%M:%S"), fl[3].strftime("%Y-%m-%d %H:%M:%S")])
+
 
 def printInfo():
     print("---------------------------------------------")
@@ -42,6 +66,9 @@ def printFlights():
         printFlight(fl, num)
         num += 1
 
+
+
+
 def addFlight():
     print("Iš kur skrenda?")
     flFrom = input()
@@ -52,6 +79,7 @@ def addFlight():
     print("Kada leidžiasi? (yyyy-mm-dd hh:mm:ss)")
     flArrive = datetime.datetime.strptime(input(), "%Y-%m-%d %H:%M:%S")
     flights.append([flFrom, flTo, flLeave, flArrive])
+    saveFlights(flights)
 
 def editFlight():
     print("Įveskite skrydžio numerį kurį norite redaguoti")
